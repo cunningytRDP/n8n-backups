@@ -1,0 +1,393 @@
+{
+  "createdAt": "2025-06-10T10:27:42.072Z",
+  "updatedAt": "2025-06-10T10:35:25.000Z",
+  "id": "8dy3QxO6Ok48b8zB",
+  "name": "Atomic Uplift",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b670c5a9-aa56-42a3-bcda-b20863080c65",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json['File name'] }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1E3XfaCtq9zCjJvRl73yVTGCed6Jce3vG",
+            "mode": "list",
+            "cachedResultName": "Atomic Uplift",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1E3XfaCtq9zCjJvRl73yVTGCed6Jce3vG"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        440,
+        0
+      ],
+      "id": "4e48d270-f938-4399-af7b-2a51ee8d5a4e",
+      "name": "Search Video",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "dlE72rJ2cM3b1GiN",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        660,
+        0
+      ],
+      "id": "bed7d1c7-9567-4caa-89b2-f57ccf44ee9a",
+      "name": "Get Video",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "dlE72rJ2cM3b1GiN",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Fetch Video Details').first().json['Youtube Title'] }}",
+        "regionCode": "US",
+        "categoryId": "22",
+        "options": {
+          "description": "={{ $('Fetch Video Details').first(\n).json['Youtube Description'] }}",
+          "privacyStatus": "public"
+        }
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "7f660ac1-ee01-4c8c-810e-3bee62a24fdf",
+      "name": "Upload Video",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "TE6VGZ0WM2Dmc0hj",
+          "name": "RoyV"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w",
+          "mode": "list",
+          "cachedResultName": "YT",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Atomic Uplift",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Fetch Video Details').first().json.ID }}",
+            "Video Status": "Published",
+            "Video Link": "=https://youtu.be/{{ $json.uploadId }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Topic/Idea",
+              "displayName": "Topic/Idea",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "File name",
+              "displayName": "File name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Youtube Title",
+              "displayName": "Youtube Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Youtube Description",
+              "displayName": "Youtube Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Youtube Tags",
+              "displayName": "Youtube Tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Video Status",
+              "displayName": "Video Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Video Link",
+              "displayName": "Video Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "98a5759f-5b55-4538-8bb7-26a7976a262f",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "SUJdTPJR3epaIkev",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w",
+          "mode": "list",
+          "cachedResultName": "YT",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Atomic Uplift",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Video Status",
+              "lookupValue": "To publish"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "2669a2c3-2483-4951-be4a-bedd69c2a83d",
+      "name": "Fetch Video Details",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "SUJdTPJR3epaIkev",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "6722615842",
+        "text": "=Short Uploaded on Atomic Uplift. Link:-  {{ $json['Video Link'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        0
+      ],
+      "id": "a9f0f422-fce3-4fff-a90e-32f082cc5bd9",
+      "name": "Telegram",
+      "webhookId": "c08d9cee-9b88-41b4-a506-d98bf7205ced",
+      "credentials": {
+        "telegramApi": {
+          "id": "nweflKQ1lQkBq9ML",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Video Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Video": {
+      "main": [
+        [
+          {
+            "node": "Get Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video": {
+      "main": [
+        [
+          {
+            "node": "Upload Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Video": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Video Details": {
+      "main": [
+        [
+          {
+            "node": "Search Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "fa64fcc4-8938-4a37-9f79-d69d54260d77",
+  "triggerCount": 1,
+  "tags": []
+}
