@@ -1,0 +1,393 @@
+{
+  "createdAt": "2025-06-10T10:30:53.805Z",
+  "updatedAt": "2025-06-10T10:36:42.000Z",
+  "id": "k9obelp8yaJoN37E",
+  "name": "IgniteDaily",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "832f1aea-35f5-455b-ad9c-5762b2abf7cd",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json['File name'] }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "10OIFDp1pGn3Qt-xn5wcqHnhYiS34f2z7",
+            "mode": "list",
+            "cachedResultName": "Ignite Daily",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/10OIFDp1pGn3Qt-xn5wcqHnhYiS34f2z7"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        440,
+        0
+      ],
+      "id": "0ff9c0a4-fef5-45d1-9ffd-216b3c8ed4ce",
+      "name": "Search Video",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "dlE72rJ2cM3b1GiN",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        660,
+        0
+      ],
+      "id": "ec92955e-1d2e-4367-b84f-b085da85a9f4",
+      "name": "Get Video",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "dlE72rJ2cM3b1GiN",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Fetch Video Details').first().json['Youtube Title'] }}",
+        "regionCode": "US",
+        "categoryId": "22",
+        "options": {
+          "description": "={{ $('Fetch Video Details').first(\n).json['Youtube Description'] }}",
+          "privacyStatus": "public"
+        }
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "e643322b-dcaa-42fa-a954-ac800c6fa66f",
+      "name": "Upload Video",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "TE6VGZ0WM2Dmc0hj",
+          "name": "RoyV"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w",
+          "mode": "list",
+          "cachedResultName": "YT",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1156976614,
+          "mode": "list",
+          "cachedResultName": "IgniteDaily",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit#gid=1156976614"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Fetch Video Details').first().json.ID }}",
+            "Video Status": "Published",
+            "Video Link": "=https://youtu.be/{{ $json.uploadId }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Topic/Idea",
+              "displayName": "Topic/Idea",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "File name",
+              "displayName": "File name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Youtube Title",
+              "displayName": "Youtube Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Youtube Description",
+              "displayName": "Youtube Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Youtube Tags",
+              "displayName": "Youtube Tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Video Status",
+              "displayName": "Video Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Video Link",
+              "displayName": "Video Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "138c2251-3044-4fcc-a604-16e4363d16ab",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "SUJdTPJR3epaIkev",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w",
+          "mode": "list",
+          "cachedResultName": "YT",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1156976614,
+          "mode": "list",
+          "cachedResultName": "IgniteDaily",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit#gid=1156976614"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Video Status",
+              "lookupValue": "To publish"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "58866126-96f2-46e0-bb91-65300b4810a1",
+      "name": "Fetch Video Details",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "SUJdTPJR3epaIkev",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "6722615842",
+        "text": "=Short Uploaded on IgniteDaily. Link:-  {{ $json['Video Link'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        0
+      ],
+      "id": "6e786ad6-8bee-426d-8316-87ded5d54859",
+      "name": "Telegram",
+      "webhookId": "34ee684a-4ca0-47fe-889b-258f7820f30b",
+      "credentials": {
+        "telegramApi": {
+          "id": "nweflKQ1lQkBq9ML",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Video Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Video": {
+      "main": [
+        [
+          {
+            "node": "Get Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video": {
+      "main": [
+        [
+          {
+            "node": "Upload Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Video": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Video Details": {
+      "main": [
+        [
+          {
+            "node": "Search Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "622b72e6-4eb5-42da-a275-804096a5d8a7",
+  "triggerCount": 1,
+  "tags": []
+}
