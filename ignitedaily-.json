@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-10T10:30:53.805Z",
-  "updatedAt": "2025-06-10T10:36:42.000Z",
+  "updatedAt": "2025-06-10T20:39:11.000Z",
   "id": "k9obelp8yaJoN37E",
   "name": "IgniteDaily",
   "active": true,
@@ -11,8 +11,8 @@
         "rule": {
           "interval": [
             {
-              "field": "hours",
-              "hoursInterval": 12
+              "field": "cronExpression",
+              "expression": "0 8,20 * * *"
             }
           ]
         }
@@ -104,7 +104,7 @@
       "credentials": {
         "youTubeOAuth2Api": {
           "id": "TE6VGZ0WM2Dmc0hj",
-          "name": "RoyV"
+          "name": "Ignite Daily"
         }
       }
     },
@@ -387,7 +387,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "622b72e6-4eb5-42da-a275-804096a5d8a7",
+  "versionId": "33816960-9065-4bbc-9675-9a79b95df389",
   "triggerCount": 1,
   "tags": []
 }
