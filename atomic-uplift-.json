@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-10T10:27:42.072Z",
-  "updatedAt": "2025-06-10T10:35:25.000Z",
+  "updatedAt": "2025-06-10T20:38:38.000Z",
   "id": "8dy3QxO6Ok48b8zB",
   "name": "Atomic Uplift",
   "active": true,
@@ -11,8 +11,8 @@
         "rule": {
           "interval": [
             {
-              "field": "hours",
-              "hoursInterval": 12
+              "field": "cronExpression",
+              "expression": "0 8,20 * * *"
             }
           ]
         }
@@ -103,8 +103,8 @@
       "name": "Upload Video",
       "credentials": {
         "youTubeOAuth2Api": {
-          "id": "TE6VGZ0WM2Dmc0hj",
-          "name": "RoyV"
+          "id": "Rgc08dZ3ZHdAMG9m",
+          "name": "Atomic Uplift"
         }
       }
     },
@@ -387,7 +387,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "fa64fcc4-8938-4a37-9f79-d69d54260d77",
+  "versionId": "9e431499-5892-4c7a-b5b0-eee92f57450a",
   "triggerCount": 1,
   "tags": []
 }
