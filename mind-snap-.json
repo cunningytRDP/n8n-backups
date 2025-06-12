@@ -1,0 +1,393 @@
+{
+  "createdAt": "2025-06-11T09:03:06.320Z",
+  "updatedAt": "2025-06-11T11:07:32.000Z",
+  "id": "zSvLQ1wnk0PKpPgS",
+  "name": "Mind Snap",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 10,21 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8b005ed6-ac9c-47f0-8d4f-09a811aed630",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json['File name'] }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1pBxYzMh3Y2G8oF_6xf5UNCxc8uOoaaq4",
+            "mode": "list",
+            "cachedResultName": "MindSnap",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1pBxYzMh3Y2G8oF_6xf5UNCxc8uOoaaq4"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        440,
+        0
+      ],
+      "id": "c7e311f5-300e-4f4e-94d6-4fd693c6c838",
+      "name": "Search Video",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "dlE72rJ2cM3b1GiN",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        660,
+        0
+      ],
+      "id": "37cd8381-e926-40db-a770-e623d57c2fd1",
+      "name": "Get Video",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "dlE72rJ2cM3b1GiN",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Fetch Video Details').first().json['Youtube Title'] }}",
+        "regionCode": "US",
+        "categoryId": "22",
+        "options": {
+          "description": "={{ $('Fetch Video Details').first(\n).json['Youtube Description'] }}",
+          "privacyStatus": "public"
+        }
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "9b1b2ad2-7483-4471-9634-8c9a15fbab10",
+      "name": "Upload Video",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "hoI0Cdx13tnQs0wY",
+          "name": "MindSnap"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w",
+          "mode": "list",
+          "cachedResultName": "YT",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1125865497,
+          "mode": "list",
+          "cachedResultName": "MindSnap",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit#gid=1125865497"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $('Fetch Video Details').first().json.ID }}",
+            "Video Status": "Published",
+            "Video Link": "=https://youtu.be/{{ $json.uploadId }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Topic/Idea",
+              "displayName": "Topic/Idea",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "File name",
+              "displayName": "File name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Youtube Title",
+              "displayName": "Youtube Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Youtube Description",
+              "displayName": "Youtube Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Youtube Tags",
+              "displayName": "Youtube Tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Video Status",
+              "displayName": "Video Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Video Link",
+              "displayName": "Video Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "7234e6ae-ecf3-4389-bdcd-fc27f1b50220",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "SUJdTPJR3epaIkev",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w",
+          "mode": "list",
+          "cachedResultName": "YT",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1125865497,
+          "mode": "list",
+          "cachedResultName": "MindSnap",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12LWCYnWhy5wOpmI__7_yhQS3AY-m1_uGkMNPE96zt4w/edit#gid=1125865497"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Video Status",
+              "lookupValue": "To publish"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "db889c61-954a-4908-ad8e-224c944ad76e",
+      "name": "Fetch Video Details",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "SUJdTPJR3epaIkev",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "6722615842",
+        "text": "=Short Uploaded on MindSnap. Link:-  {{ $json['Video Link'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        0
+      ],
+      "id": "de8a0602-01cd-41ef-a675-f2a08f7b1365",
+      "name": "Telegram",
+      "webhookId": "b61474b5-9391-414c-b99a-470e8d0b2661",
+      "credentials": {
+        "telegramApi": {
+          "id": "nweflKQ1lQkBq9ML",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Video Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Video": {
+      "main": [
+        [
+          {
+            "node": "Get Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video": {
+      "main": [
+        [
+          {
+            "node": "Upload Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Video": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Video Details": {
+      "main": [
+        [
+          {
+            "node": "Search Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "7921af4b-fa45-4795-aa56-f07bb83a5d03",
+  "triggerCount": 1,
+  "tags": []
+}
