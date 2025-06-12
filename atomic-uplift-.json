@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-10T10:27:42.072Z",
-  "updatedAt": "2025-06-10T20:38:38.000Z",
+  "updatedAt": "2025-06-11T07:36:23.000Z",
   "id": "8dy3QxO6Ok48b8zB",
   "name": "Atomic Uplift",
   "active": true,
@@ -12,7 +12,7 @@
           "interval": [
             {
               "field": "cronExpression",
-              "expression": "0 8,20 * * *"
+              "expression": "30 10,21 * * *"
             }
           ]
         }
@@ -387,7 +387,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "9e431499-5892-4c7a-b5b0-eee92f57450a",
+  "versionId": "a26d81c6-fe58-461f-b947-21eaa6f9bf3a",
   "triggerCount": 1,
   "tags": []
 }
