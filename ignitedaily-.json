@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-10T10:30:53.805Z",
-  "updatedAt": "2025-06-10T20:39:11.000Z",
+  "updatedAt": "2025-06-11T07:35:27.000Z",
   "id": "k9obelp8yaJoN37E",
   "name": "IgniteDaily",
   "active": true,
@@ -12,7 +12,7 @@
           "interval": [
             {
               "field": "cronExpression",
-              "expression": "0 8,20 * * *"
+              "expression": "30 10,21 * * *"
             }
           ]
         }
@@ -387,7 +387,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "33816960-9065-4bbc-9675-9a79b95df389",
+  "versionId": "8c9e0816-6f27-42df-adba-d6c901cbbf15",
   "triggerCount": 1,
   "tags": []
 }
